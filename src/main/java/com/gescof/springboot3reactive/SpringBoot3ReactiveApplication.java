@@ -7,4 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringBoot3ReactiveApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBoot3ReactiveApplication.class, args
+        SpringApplication.run(SpringBoot3ReactiveApplication.class, args);
+    }
+
+}

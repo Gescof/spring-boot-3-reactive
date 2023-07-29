@@ -1,11 +1,9 @@
 package com.gescof.springboot3reactive.models.dtos;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
-public record TodoRequest(
+@Builder
+public record CreateTodoRequest(
         String title,
         Boolean completed
 ) {

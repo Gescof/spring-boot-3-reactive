@@ -1,6 +1,3 @@
-CREATE TABLE IF NOT EXISTS todos
-(
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(255),
-    completed BOOLEAN NOT NULL
-);
+ALTER TABLE todos
+    ADD ts_create TIMESTAMP DEFAULT current_timestamp NOT NULL,
+    ADD ts_update TIMESTAMP DEFAULT current_timestamp NOT NULL ON UPDATE current_timestamp;

@@ -1,1 +1,10 @@
-
+spring:
+  r2dbc:
+    url: r2dbc:mariadb://localhost:3306/todo_database
+    username: username
+    password: password
+  flyway:
+    locations: classpath:db/migration
+    url: jdbc:mariadb://localhost:3306/todo_database
+    user: username
+    password: password

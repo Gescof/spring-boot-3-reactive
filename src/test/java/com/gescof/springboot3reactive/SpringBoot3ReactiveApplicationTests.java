@@ -8,3 +8,6 @@ class SpringBoot3ReactiveApplicationTests {
 
     @Test
     void contextLoads() {
+    }
+
+}
