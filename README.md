@@ -19,18 +19,25 @@ Follow these steps to set up the project locally:
 
 ### Steps
 1. Clone the repository:
-git clone https://github.com/Gescof/spring-boot-3-reactive.git
+`git clone https://github.com/Gescof/spring-boot-3-reactive.git`
+
 2. Navigate to the project directory:
-cd spring-boot-3-reactive
+`cd spring-boot-3-reactive`
+
 3. Build the project:
-mvn clean package
+`mvn clean package`
+
 4. Set up the MariaDB database using Docker Compose:
-docker-compose up -d
+`docker-compose up -d`
+
 5. Apply initial database schema using Flyway:
-mvn flyway:migrate
+`mvn flyway:migrate`
+
 6. Run the Spring Boot application:
-mvn spring-boot:run
-7. The application will be accessible at: `http://localhost:8080`
+`mvn spring-boot:run`
+
+7. The application will be accessible at: 
+`http://localhost:8080`
 
 ## Usage
 The "spring-boot-3-reactive" project provides a RESTful API that follows reactive principles using Spring WebFlux. The API offers basic CRUD (Create, Read, Update, Delete) operations for managing data.
