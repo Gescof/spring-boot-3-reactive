@@ -1,58 +1,50 @@
 package com.gescof.springboot3reactive.services;
 
-import com.gescof.springboot3reactive.exceptions.TodoNotFoundException;
 import com.gescof.springboot3reactive.models.dtos.CreateTodoRequest;
 import com.gescof.springboot3reactive.models.dtos.TodoResponse;
 import com.gescof.springboot3reactive.models.dtos.UpdateTodoRequest;
-import com.gescof.springboot3reactive.models.entities.Todo;
-import com.gescof.springboot3reactive.models.mappers.TodoMapper;
-import com.gescof.springboot3reactive.repositories.TodoRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@RequiredArgsConstructor
-@Service
-public class TodoService {
+public interface TodoService {
 
-    private final TodoRepository todoRepository;
-    private final TodoMapper todoMapper;
+    /**
+     * Creates new object form request.
+     *
+     * @param createTodoRequest the object request to create
+     * @return {@link Mono} wrapping {@link TodoResponse} that contains the data from created object
+     */
+    Mono<TodoResponse> create(CreateTodoRequest createTodoRequest);
 
-    public Mono<TodoResponse> create(final CreateTodoRequest createTodoRequest) {
-        final Todo todoToCreate = todoMapper.map(createTodoRequest);
-        final Mono<Todo> todoMonoCreated = todoRepository.save(todoToCreate);
-        return todoMonoCreated.map(todoMapper::map);
-    }
+    /**
+     * Gets all stored objects if present.
+     *
+     * @return {@link Flux} wrapping {@link TodoResponse} objects if present
+     */
+    Flux<TodoResponse> getAll();
 
-    public Flux<TodoResponse> getAll() {
-        final Flux<Todo> foundFluxTodo = todoRepository.findAll();
-        return foundFluxTodo.map(todoMapper::map);
-    }
+    /**
+     * Gets a stored object by its identifier if present.
+     *
+     * @param id the identifier
+     * @return {@link Mono} wrapping {@link TodoResponse} that contains the data from object if present
+     */
+    Mono<TodoResponse> getById(Integer id);
 
-    public Mono<TodoResponse> getById(final Integer id) {
-        return todoRepository.findById(id)
-                .switchIfEmpty(getMonoErrorNotFoundException(id))
-                .map(todoMapper::map);
-    }
+    /**
+     * Updates an existing stored object if present by its identifier.
+     *
+     * @param id the identifier
+     * @param updateTodoRequest the object request to update
+     * @return {@link Mono} wrapping {@link TodoResponse} that contains the data from updated object
+     */
+    Mono<TodoResponse> updateById(Integer id, UpdateTodoRequest updateTodoRequest);
 
-    public Mono<TodoResponse> updateById(final Integer id, final UpdateTodoRequest updateTodoRequest) {
-        final Mono<Todo> updatedMonoTodo = todoRepository.findById(id)
-                .switchIfEmpty(getMonoErrorNotFoundException(id))
-                .flatMap(existingTodo -> {
-                    final Todo todoToUpdate = todoMapper.map(id, updateTodoRequest);
-                    return todoRepository.save(todoToUpdate);
-                });
-        return updatedMonoTodo.map(todoMapper::map);
-    }
-
-    public Mono<Void> deleteById(final Integer id) {
-        return todoRepository.findById(id)
-                .switchIfEmpty(getMonoErrorNotFoundException(id))
-                .flatMap(todoRepository::delete);
-    }
-
-    private static Mono<Todo> getMonoErrorNotFoundException(final Integer id) {
-        return Mono.error(new TodoNotFoundException("Todo not found with ID: " + id));
-    }
+    /**
+     * Deletes an existing stored object if present by its identifier.
+     *
+     * @param id the identifier
+     * @return {@link Mono} empty
+     */
+    Mono<Void> deleteById(Integer id);
 }
