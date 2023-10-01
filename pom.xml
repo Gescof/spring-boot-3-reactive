@@ -21,7 +21,14 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <r2dbc-mariadb.version>1.1.4</r2dbc-mariadb.version>
         <mariadb-java-client.version>3.1.4</mariadb-java-client.version>
+        <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
     </properties>
+    <scm>
+        <connection>scm:git:${project.scm.url}</connection>
+        <developerConnection>scm:git:${project.scm.url}</developerConnection>
+        <url>git@github.com:idhub-io/idhub-api.git</url>
+        <tag>HEAD</tag>
+    </scm>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -109,6 +116,13 @@
                             <version>${mapstruct.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin.version}</version>
+                <configuration>
+                    <scmCommentPrefix>[ci skip]</scmCommentPrefix>
                 </configuration>
             </plugin>
         </plugins>
